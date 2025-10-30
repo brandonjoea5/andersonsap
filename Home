@@ -1,12 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anderson SAP</title>
+  <meta charset="utf-8" />
+  <title>Anderson's Appliance Pros</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f3f5f7;
+      --panel: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --brand: #143a5c;
+      --brand-2: #1f6fb2;
+      --accent: #14b8a6;
+      --ring: rgba(20, 58, 92, 0.25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    /* Banner image */
+    .flag-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    /* Header */
+    .site-header {
+      background: linear-gradient(to right, var(--brand), var(--brand-2));
+      color: #fff;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header-logo {
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      width: 220px;
+      box-shadow: inset -2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+    .header-logo img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .header-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 10px 20px;
+    }
+    .brand-title {
+      text-align: center;
+      font-size: clamp(1.25rem, 3.5vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin: 0;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-bottom: 10px;
+    }
+    .nav button {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font-weight: 600;
+      min-height: 44px;
+    }
+    .nav button:hover { background: rgba(255, 255, 255, 0.2); }
+    .nav button.active {
+      background: #fff;
+      color: var(--brand);
+      border-color: #fff;
+      box-shadow: 0 0 0 3px var(--ring);
+    }
+    /* Layout */
+    .wrap {
+      max-width: 1000px;
+      margin: 24px auto 32px;
+      padding: 0 16px;
+    }
+    .page { display: none; }
+    .page.active { display: block; }
+    .panel {
+      background: var(--panel);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+    h1 { margin: 0 0 10px; line-height: 1.2; }
+    .lead { color: var(--muted); margin: 0 0 16px; }
+    /* Form styling */
+    .grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: block;
+      margin: 8px 0 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      font: inherit;
+      color: var(--text);
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--brand-2);
+      box-shadow: 0 0 0 3px var(--ring);
+    }
+    .btn {
+      border: none;
+      background: var(--brand-2);
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    /* Footer */
+    footer {
+      margin: 28px 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    .fine {
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+    /* Responsive tweaks */
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .site-header { flex-direction: column; height: auto; }
+      .header-logo { width: 100%; box-shadow: none; justify-content: center; }
+      .nav { gap: 8px; justify-content: center; padding: 0 6px 10px; }
+      .nav button { flex: 1 1 calc(50% - 8px); border-radius: 12px; padding: 12px 10px; text-align: center; }
+    }
+    @media (max-width: 400px) {
+      .nav button { flex: 1 1 100%; }
+    }
+  </style>
 </head>
-<body style="font-family:system-ui; text-align:center; padding:80px;">
-  <h1>Welcome to Anderson SAP</h1>
-  <p>This site is hosted for free on GitHub Pages.</p>
+<body>
+  <!-- American Flag Banner -->
+  <div class="flag-banner">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Flag_of_the_United_States.png" alt="American Flag">
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-logo">
+      <!-- Keep the original company logo image -->
+      <img src="https://i.imgur.com/LAfmEdX.jpeg" alt="Anderson’s Appliance Pros Logo">
+    </div>
+    <div class="header-content">
+      <h1 class="brand-title">Anderson’s Appliance Pros</h1>
+      <nav class="nav" aria-label="Primary">
+        <button class="active" data-target="home">Home</button>
+        <button data-target="schedule">Schedule Appointment</button>
+        <button data-target="contact">Contact</button>
+        <button data-target="about">About Us</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="wrap">
+    <!-- HOME -->
+    <section id="home" class="page active">
+      <div class="panel">
+        <h1>Home</h1>
+        <p class="lead">Quality appliance repair &amp; service—fast, honest, and local.</p>
+        <p>
+          Use the buttons above to learn more, contact us, or schedule your appointment. 
+          We service most major brands and appliance types.
+        </p>
+        <p>
+          Serving the Dallas–Fort Worth metropolitan area. We offer a 
+          <strong>10% discount</strong> to first responders, military members, senior citizens, 
+          and repeat customers as a thank-you for your trust.
+        </p>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule" class="page">
+      <div class="panel">
+        <h1>Schedule an Appointment</h1>
+        <p class="lead">
+          Tell us a few details and we’ll reach out to confirm your time.
+        </p>
+        <form id="apptForm" onsubmit="event.preventDefault(); alert('Thanks! We received your request.');">
+          <div class="grid">
+            <div>
+              <label for="name">Full Name</label>
+              <input id="name" name="name" type="text" placeholder="Jane Doe" required />
+            </div>
+            <div>
+              <label for="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="(817) 856-9211" required />
+            </div>
+            <div>
+              <label for="address">Street Address</label>
+              <input id="address" name="address" type="text" placeholder="123 Main St" required />
+            </div>
+            <div>
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" placeholder="Your City" required />
+            </div>
+            <div>
+              <label for="state">State</label>
+              <input id="state" name="state" type="text" placeholder="TX" maxlength="2" required />
+            </div>
+            <div>
+              <label for="zip">ZIP Code</label>
+              <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="75001" required />
+            </div>
+            <div>
+              <label for="appliance">Appliance Type</label>
+              <select id="appliance" name="appliance" required>
+                <option value="">-- Select an appliance --</option>
+                <option>Refrigerator</option>
+                <option>Freezer / Ice Maker</option>
+                <option>Washer</option>
+                <option>Dryer</option>
+                <option>Dishwasher</option>
+                <option>Oven / Range / Stove</option>
+                <option>Microwave</option>
+                <option>Garbage Disposal</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="issue">Brief Description of Issue (optional)</label>
+              <input id="issue" name="issue" type="text" placeholder="e.g., not cooling, makes noise, error code E21" />
+            </div>
+          </div>
+          <div style="margin-top: 14px">
+            <button class="btn" type="submit">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="page">
+      <div class="panel">
+        <h1>Contact</h1>
+        <p class="lead">We’re here to help.</p>
+        <p>
+          Trenton Anderson – Lead Technician/Owner<br>
+          Phone: <strong>(817) 856-9211</strong><br>
+          Email: <a href="mailto:andersonsappliancepros@gmail.com">andersonsappliancepros@gmail.com</a><br>
+          Hours: Mon–Fri 8:00am–5:00pm
+        </p>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="page">
+      <div class="panel">
+        <h1>About Us</h1>
+        <p class="lead">
+          Trusted technicians. Transparent pricing. Quality repairs.
+        </p>
+        <p>
+          Anderson’s Appliance Pros is a family-owned company led by Trenton Anderson, 
+          our lead technician and owner. We stand behind our work and strive for customer satisfaction.
+        </p>
+        <p>
+          We service all major appliance brands, including (but not limited to) the ones below:
+        </p>
+        <ul style="list-style:none; padding:0;">
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Kenmore_logo.svg/767px-Kenmore_logo.svg.png" alt="Kenmore" width="100"> Kenmore</li>
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Whirlpool_Corporation_Logo.png" alt="Whirlpool" width="100"> Whirlpool</li>
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Kitchenaid_logo.svg/1024px-Kitchenaid_logo.svg.png" alt="KitchenAid" width="100"> KitchenAid</li>
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Frigidaire.svg/2560px-Frigidaire.svg.png" alt="Frigidaire" width="100"> Frigidaire</li>
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/LG_logo_(2014).svg/2560px-LG_logo_(2014).svg.png" alt="LG" width="100"> LG</li>
+          <li><img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Speed_Queen_logo.png" alt="Speed Queen" width="100"> Speed Queen</li>
+        </ul>
+        <p>
+          Even if your appliance brand isn't listed, we likely can help – just ask us. We cover refrigerators, ovens, dishwashers, washers, dryers, microwaves, disposals, ice makers, vent hoods, and more.
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer Disclaimer -->
+    <footer>
+      <div class="footer-inner">
+        <div><strong>Anderson’s Appliance Pros LLC</strong></div>
+        <div class="fine" style="margin-top: 6px">
+          Disclaimer: Service availability may vary by location. Diagnostic fees, parts, and labor are quoted before work begins. 
+          All trademarks and brand names are the property of their respective owners and are used for identification only. 
+          Nothing herein implies endorsement or affiliation.
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Simple single-page navigation
+    const buttons = document.querySelectorAll(".nav button");
+    const pages = document.querySelectorAll(".page");
+    function showPage(id) {
+      pages.forEach(p => p.classList.toggle("active", p.id === id));
+      buttons.forEach(b => b.classList.toggle("active", b.dataset.target === id));
+      location.hash = id;
+    }
+    buttons.forEach(btn => btn.addEventListener("click", () => showPage(btn.dataset.target)));
+    const initial = location.hash?.replace("#", "") || "home";
+    if (document.getElementById(initial)) showPage(initial);
+  </script>
 </body>
 </html>
