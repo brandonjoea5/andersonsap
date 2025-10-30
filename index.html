@@ -4,265 +4,308 @@
   <meta charset="utf-8" />
   <title>Andersons Appliance Pros</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Reliable appliance repair & installation across the DFW metroplex." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
     :root{
-      --bg:#f5f7fa; --panel:#ffffff; --ink:#0f172a; --muted:#475569;
-      --brand:#143a5c; --brand-2:#1f6fb2; --accent:#14b8a6;
-      --ring:rgba(20,58,92,.22);
-      --radius:14px;
-      --ribbon-h:6px;
+      /* Professional palette */
+      --bg:#f4f7fb;
+      --ink:#0f172a;
+      --muted:#475569;
+      --brand:#143a5c;     /* deep navy */
+      --brand-2:#1e5e97;   /* steel blue */
+      --accent:#12b886;    /* supportive green (for success/cta) */
+      --line:#d9e1ee;
+      --panel:#ffffff;
+      --radius:16px;
+      --ring:rgba(30,94,151,.18);
     }
-    *{box-sizing:border-box}
-    body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}
 
-    /* Header */
+    *{ box-sizing:border-box }
+    html,body{ margin:0; padding:0; font:16px/1.55 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background:var(--bg); }
+
+    /* ===== Header ===== */
     .site-header{
-      position:sticky; top:0; z-index:20;
-      background:linear-gradient(90deg,var(--brand),var(--brand-2));
-      color:#fff;
-      box-shadow:0 8px 20px rgba(0,0,0,.06);
+      position:sticky; top:0; z-index:50;
+      background:linear-gradient(180deg, #0f2a48, #143a5c);
+      color:#fff; border-bottom:1px solid rgba(255,255,255,.15);
+      box-shadow: 0 10px 24px rgba(0,0,0,.08);
     }
-    .header-inner{
-      max-width:1100px; margin:0 auto; padding:18px 16px 10px;
-      display:flex; align-items:center; gap:18px;
+    .header-bar{
+      max-width:1100px; margin:0 auto; padding:10px 16px;
+      display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center;
     }
-    .brand-logo{
-      flex:0 0 auto; width:190px; height:72px;
+
+    /* Left: company logo (uniform box so header height stays stable) */
+    .brand-tile{
       display:flex; align-items:center; justify-content:center;
-      background:#fff; border-radius:12px;
-      box-shadow:0 2px 10px rgba(0,0,0,.08);
-      padding:8px;
+      width:200px; height:70px; background:#fff; border-radius:12px; padding:8px;
+      box-shadow:0 2px 10px rgba(0,0,0,.10);
     }
-    .brand-logo img{
-      max-width:100%; max-height:100%; object-fit:contain;
-    }
-    .brand-meta{
-      flex:1 1 auto; display:flex; flex-direction:column; gap:6px; min-width:0;
-    }
+    .brand-tile img{ max-width:100%; max-height:100%; object-fit:contain }
+
+    /* Middle: name & tagline (locked type) */
+    .brand-meta{ min-width:0; }
     .brand-title{
-      margin:0; font-weight:800; letter-spacing:.3px;
-      font-size:clamp(1.25rem,3.2vw,1.9rem);
+      margin:0; font-weight:800; font-size:clamp(1.25rem, 3vw, 1.85rem); letter-spacing:.2px;
       text-shadow:0 1px 2px rgba(0,0,0,.18);
     }
     .brand-sub{
-      margin:0; opacity:.9; font-size:.98rem
+      margin:.2rem 0 0; opacity:.95; font-size:.98rem;
     }
 
-    /* Ribbon accent (thin patriotic line) */
-    .ribbon{
-      height:var(--ribbon-h);
-      background:linear-gradient(90deg,#c1121f,#ffffff,#002654);
+    /* Right: American flag with transparent background (SVG), scaled */
+    .flag{
+      width:64px; height:auto; display:block; filter: drop-shadow(0 1px 2px rgba(0,0,0,.25));
     }
+
+    /* Thin ribbon accent */
+    .ribbon{ height:6px; background:linear-gradient(90deg,#b22234,#ffffff,#3c3b6e); }
 
     /* Nav */
     .nav{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
-      padding:10px 16px 14px;
+      display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+      padding:12px 16px 14px; border-top:1px solid rgba(255,255,255,.12);
     }
     .nav button{
-      appearance:none; border:1px solid rgba(255,255,255,.35);
-      background:rgba(255,255,255,.12); color:#fff;
-      padding:10px 16px; border-radius:999px; cursor:pointer; font-weight:700;
-      transition:.18s ease; min-height:44px;
+      appearance:none; cursor:pointer; font-weight:800; letter-spacing:.2px;
+      color:#e9f2ff; background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.28); border-radius:999px;
+      padding:10px 16px; min-height:44px;
+      transition: .15s ease;
     }
-    .nav button:hover{background:rgba(255,255,255,.22)}
-    .nav button.active{background:#fff;color:var(--brand);border-color:#fff;box-shadow:0 0 0 3px var(--ring)}
+    .nav button:hover{ background:rgba(255,255,255,.18) }
+    .nav button.active{
+      background:#fff; color:var(--brand); border-color:#fff; box-shadow:0 0 0 3px var(--ring);
+    }
 
-    /* Layout */
-    .wrap{max-width:1100px;margin:26px auto 36px;padding:0 16px}
-    .page{display:none}
-    .page.active{display:block}
+    /* ===== Layout ===== */
+    .wrap{ max-width:1100px; margin:28px auto 44px; padding:0 16px; }
+    .page{ display:none; }
+    .page.active{ display:block; }
+
     .panel{
-      background:var(--panel); border-radius:var(--radius);
-      padding:22px; box-shadow:0 10px 28px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.05);
+      background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+      box-shadow: 0 12px 28px rgba(3,10,30,.06), 0 2px 4px rgba(3,10,30,.04);
+      padding:22px;
     }
-    h1{margin:0 0 10px; line-height:1.2}
-    .lead{color:var(--muted); margin:0 0 16px}
+    .h1{ margin:0 0 8px; line-height:1.2; font-size:1.6rem; font-weight:800; }
+    .lead{ margin:0 0 16px; color:var(--muted); }
 
-    /* Highlights / coupon */
+    /* Highlights / offers */
     .highlight{
-      background:linear-gradient(180deg,#fff, #f8fbff);
-      border:1px solid #e6eef8;
-      padding:14px 16px; border-radius:12px; margin:12px 0 4px;
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      background:linear-gradient(180deg,#ffffff,#f7fbff);
+      border:1px solid #e6eef8; border-radius:12px; padding:14px 16px; margin:14px 0 6px;
     }
     .badge{
-      display:inline-block; font-weight:800; font-size:.88rem;
-      padding:6px 10px; border-radius:999px; background:#e9f7ef; color:#106b45; margin-right:8px;
+      background:#e9f7ef; color:#106b45; font-weight:800; border-radius:999px; padding:6px 10px; font-size:.9rem;
     }
 
-    /* Brand logo grid (uniform sizing) */
+    /* Services grid */
+    .grid{ display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
+    .grid .panel{ padding:16px; }
+    @media (max-width:820px){ .grid{ grid-template-columns: 1fr; } }
+
+    /* Logos — UNIFORM visual size and names */
     .logo-grid{
-      display:grid; gap:14px;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-      margin-top:8px;
+      display:grid; gap:14px; grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+      margin-top:10px;
     }
     .logo-card{
-      display:flex; align-items:center; gap:10px;
-      background:#fff; border:1px solid #e6eaf0; border-radius:12px; padding:10px 12px;
+      display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #e6eaf0; border-radius:12px; padding:10px 12px;
       box-shadow:0 2px 8px rgba(0,0,0,.03);
     }
-    .logo-frame{
-      width:120px; height:40px; flex:0 0 auto;
-      display:grid; place-items:center;
-    }
-    .logo-frame img{
-      max-width:120px; max-height:40px; object-fit:contain;
-      image-rendering:auto;
-    }
-    .logo-name{font-weight:600; color:#1f2937}
+    .logo-frame{ width:120px; height:40px; display:grid; place-items:center; flex:0 0 auto; }
+    .logo-frame img{ max-width:120px; max-height:40px; object-fit:contain; }
+    .logo-name{ font-weight:700; color:#1f2937; }
 
     /* Form */
-    .grid{display:grid; gap:12px; grid-template-columns:1fr 1fr}
-    label{font-weight:600; font-size:.95rem; display:block; margin:8px 0 6px}
-    input,select,textarea{
-      width:100%; padding:10px 12px; border-radius:10px; border:1px solid #cbd5e1;
-      background:#fff; font:inherit; color:var(--ink); outline:none;
+    .form-grid{ display:grid; gap:12px; grid-template-columns:1fr 1fr; }
+    @media (max-width:720px){ .form-grid{ grid-template-columns:1fr; } }
+    label{ display:block; font-weight:700; font-size:.95rem; margin:8px 0 6px; }
+    input, select, textarea{
+      width:100%; background:#fff; color:var(--ink); border:1px solid #cbd5e1; border-radius:10px; padding:10px 12px; font:inherit; outline:none;
     }
-    input:focus,select:focus,textarea:focus{border-color:var(--brand-2); box-shadow:0 0 0 3px var(--ring)}
-    .btn{border:none; background:var(--brand-2); color:#fff; padding:12px 16px; border-radius:12px; font-weight:800; cursor:pointer}
-    .btn:hover{filter:brightness(1.05)}
+    input:focus, select:focus, textarea:focus{ border-color:var(--brand-2); box-shadow:0 0 0 3px var(--ring); }
+    .btn{
+      appearance:none; cursor:pointer; border:none; border-radius:12px; font-weight:800; letter-spacing:.2px;
+      background:linear-gradient(180deg, var(--brand-2), #124a7b); color:#fff; padding:12px 16px;
+    }
+    .btn:hover{ filter:brightness(1.05); }
 
     /* Footer */
-    footer{margin:30px 0; color:var(--muted); font-size:.92rem}
-    .footer-inner{max-width:1100px; margin:0 auto; padding:0 16px}
-    .fine{font-size:.85rem; color:#64748b}
+    footer{ margin:36px 0 28px; color:var(--muted); font-size:.95rem; }
+    .footer-inner{ max-width:1100px; margin:0 auto; padding:0 16px; }
+    .fine{ font-size:.86rem; color:#6b7280; }
 
-    /* Responsive */
-    @media (max-width:860px){
-      .header-inner{flex-direction:column; align-items:stretch; gap:12px; padding:14px 16px 8px}
-      .brand-logo{width:100%; height:80px}
-      .brand-meta{align-items:center; text-align:center}
-    }
-    @media (max-width:720px){
-      .grid{grid-template-columns:1fr}
-      .nav{padding:8px 12px 14px}
-      .nav button{flex:1 1 calc(50% - 8px)}
-    }
-    @media (max-width:420px){
-      .nav button{flex:1 1 100%}
-    }
+    /* Utility */
+    .mt-16{ margin-top:16px; }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- ===== Header ===== -->
   <header class="site-header" role="banner">
-    <div class="header-inner">
-      <div class="brand-logo" aria-label="Company Logo">
-        <!-- Replace the src below with the DIRECT image URL from your Imgur album -->
-        <img src="YOUR_IMGUR_IMAGE_URL" alt="Andersons Appliance Pros Logo"
-             onerror="this.src='https://i.imgur.com/LAfmEdX.jpeg'">
+    <div class="header-bar">
+      <!-- Left: Company logo (replace src) -->
+      <div class="brand-tile" aria-label="Company Logo">
+        <img src="YOUR_LOGO_URL" alt="Andersons Appliance Pros Logo" />
       </div>
+
+      <!-- Middle: Name & tagline -->
       <div class="brand-meta">
         <h1 class="brand-title">Andersons Appliance Pros</h1>
-        <p class="brand-sub">Repair &amp; installation of all major brand appliances • Dallas–Fort Worth metro</p>
+        <p class="brand-sub">Repair &amp; installation of all major brands • Dallas–Fort Worth metro</p>
       </div>
+
+      <!-- Right: American flag (transparent background) -->
+      <svg class="flag" viewBox="0 0 190 100" xmlns="http://www.w3.org/2000/svg" aria-label="American flag">
+        <!-- Transparent background by default -->
+        <!-- 13 stripes -->
+        <g>
+          <rect x="0" y="0" width="190" height="100" fill="#b22234"/>
+          <rect x="0" y="7.692" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="15.384" width="190" height="7.692" fill="#b22234"/>
+          <rect x="0" y="23.076" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="30.768" width="190" height="7.692" fill="#b22234"/>
+          <rect x="0" y="38.46" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="46.152" width="190" height="7.692" fill="#b22234"/>
+          <rect x="0" y="53.844" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="61.536" width="190" height="7.692" fill="#b22234"/>
+          <rect x="0" y="69.228" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="76.92" width="190" height="7.692" fill="#b22234"/>
+          <rect x="0" y="84.612" width="190" height="7.692" fill="#ffffff"/>
+          <rect x="0" y="92.304" width="190" height="7.696" fill="#b22234"/>
+        </g>
+        <!-- Canton -->
+        <rect x="0" y="0" width="76" height="53.846" fill="#3c3b6e"/>
+        <!-- Stars (rows staggered) -->
+        <g fill="#ffffff">
+          <!-- 6-star rows -->
+          <g transform="translate(6,5)">
+            <!-- 6 columns -->
+            <circle cx="0" cy="0" r="2.2"/>
+            <circle cx="12" cy="0" r="2.2"/>
+            <circle cx="24" cy="0" r="2.2"/>
+            <circle cx="36" cy="0" r="2.2"/>
+            <circle cx="48" cy="0" r="2.2"/>
+            <circle cx="60" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(6,13)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/><circle cx="60" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(6,21)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/><circle cx="60" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(6,29)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/><circle cx="60" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(6,37)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/><circle cx="60" cy="0" r="2.2"/>
+          </g>
+          <!-- 5-star rows (offset) -->
+          <g transform="translate(12,9)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(12,17)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(12,25)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/>
+          </g>
+          <g transform="translate(12,33)">
+            <circle cx="0" cy="0" r="2.2"/><circle cx="12" cy="0" r="2.2"/><circle cx="24" cy="0" r="2.2"/><circle cx="36" cy="0" r="2.2"/><circle cx="48" cy="0" r="2.2"/>
+          </g>
+        </g>
+      </svg>
     </div>
+
     <div class="ribbon" aria-hidden="true"></div>
+
     <nav class="nav" aria-label="Primary">
       <button class="active" data-target="home">Home</button>
-      <button data-target="schedule">Schedule Appointment</button>
+      <button data-target="schedule">Schedule</button>
       <button data-target="contact">Contact</button>
-      <button data-target="about">About Us</button>
+      <button data-target="about">About</button>
     </nav>
   </header>
 
+  <!-- ===== Main ===== -->
   <main class="wrap">
+
     <!-- HOME -->
     <section id="home" class="page active" aria-labelledby="home-hd">
       <div class="panel">
-        <h1 id="home-hd">Welcome</h1>
+        <h2 id="home-hd" class="h1">Welcome</h2>
         <p class="lead">Fast, honest, and local appliance service—done right the first time.</p>
+
         <div class="highlight">
           <span class="badge">10% OFF</span>
-          First responders, military, senior citizens, and repeat customers. Thank you for your service &amp; loyalty.
+          First responders, military, seniors, and repeat customers. Thank you for your service & loyalty.
         </div>
-        <p style="margin-top:10px">
-          We service: ovens, cooktops, microwaves, vent hoods, refrigerators, freezers, ice makers, dishwashers, disposals,
-          trash compactors, washers, dryers, and wine coolers.
-        </p>
 
-        <h2 style="margin:18px 0 8px">Brands We Service</h2>
-        <!-- All logos display the same visual size via .logo-frame (120×40) -->
+        <div class="grid mt-16">
+          <div class="panel">
+            <h3 class="h1" style="font-size:1.15rem">What We Service</h3>
+            <p class="lead" style="margin-top:6px">
+              Refrigerators • Freezers & Ice Makers • Ovens/Ranges • Microwaves • Dishwashers • Disposals •
+              Washers • Dryers • Vent Hoods • Wine Coolers
+            </p>
+          </div>
+          <div class="panel">
+            <h3 class="h1" style="font-size:1.15rem">Why Choose Us</h3>
+            <p class="lead" style="margin-top:6px">
+              Transparent quotes, quality parts, and appointments that respect your time. Proudly serving the DFW metroplex.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="h1" style="font-size:1.2rem; margin-top:18px">Brands We Service</h3>
         <div class="logo-grid" role="list">
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Kenmore_logo.svg" alt="Kenmore logo">
-            </div><div class="logo-name">Kenmore</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Kenmore_logo.svg" alt="Kenmore logo"></div>
+            <div class="logo-name">Kenmore</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Whirlpool_Corporation_Logo.png" alt="Whirlpool logo">
-            </div><div class="logo-name">Whirlpool</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Whirlpool_Corporation_Logo.png" alt="Whirlpool logo"></div>
+            <div class="logo-name">Whirlpool</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Maytag_logo.svg" alt="Maytag logo">
-            </div><div class="logo-name">Maytag</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Maytag_logo.svg" alt="Maytag logo"></div>
+            <div class="logo-name">Maytag</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/Kitchenaid_logo.svg" alt="KitchenAid logo">
-            </div><div class="logo-name">KitchenAid</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Frigidaire.svg" alt="Frigidaire logo"></div>
+            <div class="logo-name">Frigidaire</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/JennAir_Logo.svg" alt="JennAir logo">
-            </div><div class="logo-name">JennAir</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/General_Electric_logo.svg" alt="GE logo"></div>
+            <div class="logo-name">GE</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Frigidaire.svg" alt="Frigidaire logo">
-            </div><div class="logo-name">Frigidaire</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung logo"></div>
+            <div class="logo-name">Samsung</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/General_Electric_logo.svg" alt="GE logo">
-            </div><div class="logo-name">GE</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/LG_logo_%282015%29.svg" alt="LG logo"></div>
+            <div class="logo-name">LG</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung logo">
-            </div><div class="logo-name">Samsung</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Viking_Range_logo.svg" alt="Viking logo"></div>
+            <div class="logo-name">Viking</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/LG_logo_%282015%29.svg" alt="LG logo">
-            </div><div class="logo-name">LG</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Wolf_Logo.svg" alt="Wolf logo"></div>
+            <div class="logo-name">Wolf</div>
           </div>
-
           <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Speed_Queen_logo.png" alt="Speed Queen logo">
-            </div><div class="logo-name">Speed Queen</div>
-          </div>
-
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Viking_Range_logo.svg" alt="Viking logo">
-            </div><div class="logo-name">Viking</div>
-          </div>
-
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Wolf_Logo.svg" alt="Wolf logo">
-            </div><div class="logo-name">Wolf</div>
-          </div>
-
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Scotsman-logo.png" alt="Scotsman logo">
-            </div><div class="logo-name">Scotsman</div>
+            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Scotsman-logo.png" alt="Scotsman logo"></div>
+            <div class="logo-name">Scotsman</div>
           </div>
         </div>
+
         <p style="margin-top:10px; font-size:.9rem; color:#6b7280">
           All trademarks and brand names are the property of their respective owners and are used for identification only.
         </p>
@@ -272,33 +315,34 @@
     <!-- SCHEDULE -->
     <section id="schedule" class="page" aria-labelledby="sched-hd">
       <div class="panel">
-        <h1 id="sched-hd">Schedule an Appointment</h1>
+        <h2 id="sched-hd" class="h1">Schedule an Appointment</h2>
         <p class="lead">Tell us a few details and we’ll reach out to confirm your time.</p>
+
         <form id="apptForm" onsubmit="event.preventDefault(); alert('Thanks! We received your request.');">
-          <div class="grid">
+          <div class="form-grid">
             <div>
               <label for="name">Full Name</label>
-              <input id="name" name="name" type="text" placeholder="Jane Doe" required>
+              <input id="name" name="name" type="text" placeholder="Jane Doe" required />
             </div>
             <div>
               <label for="phone">Phone Number</label>
-              <input id="phone" name="phone" type="tel" placeholder="(817) 856-9211" required>
+              <input id="phone" name="phone" type="tel" placeholder="(817) 856-9211" required />
             </div>
             <div>
               <label for="address">Street Address</label>
-              <input id="address" name="address" type="text" placeholder="123 Main St" required>
+              <input id="address" name="address" type="text" placeholder="123 Main St" required />
             </div>
             <div>
               <label for="city">City</label>
-              <input id="city" name="city" type="text" placeholder="Your City" required>
+              <input id="city" name="city" type="text" placeholder="Your City" required />
             </div>
             <div>
               <label for="state">State</label>
-              <input id="state" name="state" type="text" placeholder="TX" maxlength="2" required>
+              <input id="state" name="state" type="text" placeholder="TX" maxlength="2" required />
             </div>
             <div>
               <label for="zip">ZIP Code</label>
-              <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="75001" required>
+              <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="75001" required />
             </div>
             <div>
               <label for="appliance">Appliance Type</label>
@@ -320,6 +364,7 @@
               <textarea id="issue" name="issue" rows="2" placeholder="e.g., not cooling, makes noise, error code E21"></textarea>
             </div>
           </div>
+
           <div style="margin-top:14px">
             <button class="btn" type="submit">Submit Request</button>
           </div>
@@ -330,12 +375,12 @@
     <!-- CONTACT -->
     <section id="contact" class="page" aria-labelledby="contact-hd">
       <div class="panel">
-        <h1 id="contact-hd">Contact</h1>
+        <h2 id="contact-hd" class="h1">Contact</h2>
         <p class="lead">We’re here to help.</p>
         <p>
-          <strong>Trenton Anderson — Lead Technician/Owner</strong><br>
-          Phone: <a href="tel:+18178569211">(817) 856-9211</a><br>
-          Email: <a href="mailto:andersonsappliancepros@gmail.com">andersonsappliancepros@gmail.com</a><br>
+          <strong>Trenton Anderson — Lead Technician/Owner</strong><br />
+          Phone: <a href="tel:+18178569211">(817) 856-9211</a><br />
+          Email: <a href="mailto:andersonsappliancepros@gmail.com">andersonsappliancepros@gmail.com</a><br />
           Hours: Mon–Fri 8:00am–5:00pm
         </p>
       </div>
@@ -344,7 +389,7 @@
     <!-- ABOUT -->
     <section id="about" class="page" aria-labelledby="about-hd">
       <div class="panel">
-        <h1 id="about-hd">About Us</h1>
+        <h2 id="about-hd" class="h1">About Us</h2>
         <p class="lead">Transparent pricing. Quality repairs. Proudly serving the DFW metroplex.</p>
         <p>
           Andersons Appliance Pros is locally owned and operated by Trenton Anderson. We handle repair and installation
@@ -353,16 +398,17 @@
       </div>
     </section>
 
-    <footer>
-      <div class="footer-inner">
-        <div><strong>Andersons Appliance Pros LLC</strong></div>
-        <div class="fine" style="margin-top:6px">
-          Disclaimer: Service availability may vary by location. Diagnostic fees, parts, and labor are quoted before work begins.
-          All trademarks and brand names are the property of their respective owners and are used for identification only. Nothing herein implies endorsement or affiliation.
-        </div>
-      </div>
-    </footer>
   </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div><strong>Andersons Appliance Pros LLC</strong></div>
+      <div class="fine" style="margin-top:6px">
+        Disclaimer: Service availability may vary by location. Diagnostic fees, parts, and labor are quoted before work begins.
+        All trademarks and brand names are the property of their respective owners and are used for identification only. Nothing herein implies endorsement or affiliation.
+      </div>
+    </div>
+  </footer>
 
   <script>
     // Simple single-page navigation
@@ -372,6 +418,7 @@
       pages.forEach(p=>p.classList.toggle("active", p.id===id));
       buttons.forEach(b=>b.classList.toggle("active", b.dataset.target===id));
       location.hash = id;
+      window.scrollTo({top:0, behavior:"smooth"});
     }
     buttons.forEach(btn=>btn.addEventListener("click", ()=>showPage(btn.dataset.target)));
     const initial = location.hash?.replace("#","") || "home";
