@@ -14,13 +14,14 @@
       --ink:#ecf2ff; --muted:#a7b1c6; --line:#233147;
       --brand:#1c79d7; --brand-2:#155aa3; --accent:#16c784;
       --radius:16px; --shadow:0 14px 40px rgba(0,0,0,.35); --ring:rgba(28,121,215,.24);
+      --logo-size:120px; /* square tile size */
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
     a{color:inherit}
 
     /* ===== Header ===== */
-    .site-header{position:sticky; top:0; z-index:50; background:linear-gradient(180deg, #0d1420, #0f1622); border-bottom:1px solid var(--line); backdrop-filter:saturate(120%) blur(8px);}
+    .site-header{position:sticky; top:0; z-index:50; background:linear-gradient(180deg,#0d1420,#0f1622); border-bottom:1px solid var(--line); backdrop-filter:saturate(120%) blur(8px);}
     .header-bar{max-width:1100px; margin:0 auto; padding:12px 16px; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;}
     .brand-tile{width:200px; height:70px; border-radius:12px; background:#0a0f18; border:1px solid var(--line); display:grid; place-items:center; padding:8px; box-shadow:var(--shadow);}
     .brand-tile img{max-width:100%; max-height:100%; object-fit:contain}
@@ -60,13 +61,35 @@
     .highlight{display:flex; flex-wrap:wrap; align-items:center; gap:10px; background:linear-gradient(180deg,#162233,#0f1826); border:1px solid #20304a; border-radius:12px; padding:14px 16px; margin:14px 0 6px;}
     .badge{background:#0f2f23; color:#7cf2bd; border:1px solid #1f8f64; font-weight:800; padding:6px 10px; border-radius:999px; font-size:.9rem}
 
-    /* Logos grid — uniform */
-    .logo-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); margin-top:10px}
-    .logo-card{display:flex; align-items:center; gap:12px; background:#0f1622; border:1px solid var(--line); border-radius:12px; padding:12px;}
-    .logo-card{min-width:0}
-    .logo-frame{width:120px; height:40px; display:grid; place-items:center; flex:0 0 auto; background:#0a1118; border:1px solid #1b2940; border-radius:8px}
-    .logo-frame img{max-width:120px; max-height:40px; object-fit:contain; filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
-    .logo-name{font-weight:800; color:#dbe6ff; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    /* Logos grid — UNIFORM SQUARES, names under */
+    .logo-grid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); margin-top:10px}
+    .logo-card{display:flex; flex-direction:column; align-items:center; gap:10px; background:#0f1622; border:1px solid var(--line); border-radius:12px; padding:12px;}
+    .logo-frame{
+      width:var(--logo-size);
+      height:var(--logo-size);
+      background:#ffffff;             /* white tile for visibility */
+      border:1px solid #dfe6f5;
+      border-radius:12px;
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .logo-frame img{
+      max-width:85%;
+      max-height:85%;
+      object-fit:contain;
+      image-rendering:auto;
+      filter:drop-shadow(0 1px 1px rgba(0,0,0,.15));
+    }
+    .logo-name{
+      font-weight:800; color:#dbe6ff; text-align:center;
+      width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    /* When an image fails, show a nice text tile */
+    .logo-frame.fallback{
+      display:flex; align-items:center; justify-content:center;
+      background:#ffffff;
+      color:#1b2a46; font-weight:900; letter-spacing:.2px; padding:10px;
+    }
 
     /* Form */
     .form-grid{display:grid; gap:12px; grid-template-columns:1fr 1fr}
@@ -111,7 +134,7 @@
         <p class="brand-sub">Repair &amp; installation of all major brands • Dallas–Fort Worth metro</p>
       </div>
 
-      <!-- Right: replace with a realistic flag image -->
+      <!-- Right: realistic flag image -->
       <img class="flag" src="YOUR_FLAG_URL" alt="American flag">
     </div>
 
@@ -163,45 +186,97 @@
         </div>
 
         <h3 class="h1" style="font-size:1.2rem; margin-top:18px">Brands We Service</h3>
+
+        <!-- LOGOS GRID -->
         <div class="logo-grid" role="list">
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Kenmore_logo.svg" alt="Kenmore logo"></div>
+          <!-- Each card tries to load the image; if it fails, JS adds .fallback with brand text -->
+          <div class="logo-card" role="listitem" data-brand="Kenmore">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Kenmore_logo.svg"
+                   alt="Kenmore logo" />
+            </div>
             <div class="logo-name">Kenmore</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/1/10/Whirlpool_Corporation_Logo.png" alt="Whirlpool logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Whirlpool">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://upload.wikimedia.org/wikipedia/commons/1/10/Whirlpool_Corporation_Logo.png"
+                   alt="Whirlpool logo" />
+            </div>
             <div class="logo-name">Whirlpool</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Maytag_logo.svg" alt="Maytag logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Maytag">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://1000logos.net/wp-content/uploads/2017/06/Maytag-logo.png"
+                   alt="Maytag logo" />
+            </div>
             <div class="logo-name">Maytag</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Frigidaire.svg" alt="Frigidaire logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Frigidaire">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://upload.wikimedia.org/wikipedia/commons/6/66/Frigidaire.svg"
+                   alt="Frigidaire logo" />
+            </div>
             <div class="logo-name">Frigidaire</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/General_Electric_logo.svg" alt="GE logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="GE">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://www.hiclipart.com/images/share/5/55/55649d7d2c8df7d8a3e2d9a7a5d0b0b3.png"
+                   alt="GE logo" />
+            </div>
             <div class="logo-name">GE</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Samsung">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://seeklogo.com/images/S/samsung-logo-9E991C26F4-seeklogo.com.png"
+                   alt="Samsung logo" />
+            </div>
             <div class="logo-name">Samsung</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/8/87/LG_logo_%282015%29.svg" alt="LG logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="LG">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://www.hiclipart.com/images/share/2/204a9a5f9b9c5c4a1bc1cde0f5b7a8f7.png"
+                   alt="LG logo" />
+            </div>
             <div class="logo-name">LG</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Viking_Range_logo.svg" alt="Viking logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Viking">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://www.pngegg.com/pngimages/169/887/png-clipart-viking-range-corporation-logo-kitchen-appliance-viking-range-corporation-refrigerator-appliance.png"
+                   alt="Viking logo" />
+            </div>
             <div class="logo-name">Viking</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Wolf_Logo.svg" alt="Wolf logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Wolf">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://www.hiclipart.com/images/share/1/1f0f68f6d3dfc0f8a7b3d8b9b3e2c4fd.png"
+                   alt="Wolf logo" />
+            </div>
             <div class="logo-name">Wolf</div>
           </div>
-          <div class="logo-card" role="listitem">
-            <div class="logo-frame"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Scotsman-logo.png" alt="Scotsman logo"></div>
+
+          <div class="logo-card" role="listitem" data-brand="Scotsman">
+            <div class="logo-frame">
+              <img loading="lazy" referrerpolicy="no-referrer"
+                   src="https://seeklogo.com/images/S/Scotsman-logo-1A2F1D6B2D-seeklogo.com.png"
+                   alt="Scotsman logo" />
+            </div>
             <div class="logo-name">Scotsman</div>
           </div>
         </div>
@@ -245,7 +320,7 @@
               <input id="zip" name="zip" type="text" inputmode="numeric" pattern="[0-9]{5}" placeholder="75001" required />
             </div>
 
-            <!-- NEW: Contact preference -->
+            <!-- Preferred Contact -->
             <div>
               <label>Preferred Contact</label>
               <div class="row" role="group" aria-label="Preferred contact method">
@@ -258,7 +333,7 @@
               </div>
             </div>
 
-            <!-- NEW: Make -->
+            <!-- Make -->
             <div>
               <label for="make">Appliance Make</label>
               <select id="make" name="make" required>
@@ -277,7 +352,7 @@
               </select>
             </div>
 
-            <!-- NEW: Model number -->
+            <!-- Model -->
             <div>
               <label for="model">Model Number</label>
               <input id="model" name="model" type="text" placeholder="e.g., WRS325SDHZ08" />
@@ -357,7 +432,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // Simple tab navigation (no reload)
+    // Tabs
     const buttons = document.querySelectorAll(".nav button");
     const pages = document.querySelectorAll(".page");
     function showPage(id){
@@ -370,11 +445,20 @@
     const initial = location.hash?.replace("#","") || "home";
     if(document.getElementById(initial)) showPage(initial);
 
+    // Logo fallbacks: if an image fails (e.g., link is a page not a PNG),
+    // replace the tile with a clean text brand tile so nothing looks broken.
+    document.querySelectorAll(".logo-card .logo-frame img").forEach(img=>{
+      img.addEventListener("error",()=>{
+        const frame = img.parentElement;
+        const brand = frame.closest(".logo-card")?.dataset.brand || "Brand";
+        frame.classList.add("fallback");
+        frame.innerHTML = brand;
+      });
+    });
+
     // === Form submit: try API -> fallback to mailto -> always show toast
     const EMAIL_TO = "andersonsappliancepros@gmail.com";
-    // If you have a Worker/API, put it here (should accept JSON POST):
-    // Example CF Worker endpoint: https://your-worker.yourdomain.workers.dev/lead
-    const API_ENDPOINT = ""; // leave blank to use mailto fallback
+    const API_ENDPOINT = ""; // optional: your CF Worker endpoint
 
     const form = document.getElementById("apptForm");
     const toast = document.getElementById("toast");
@@ -382,8 +466,7 @@
     function showToast(msg){
       toast.textContent = msg;
       toast.classList.remove("show");
-      // force reflow to restart animation
-      void toast.offsetWidth;
+      void toast.offsetWidth; // restart animation
       toast.classList.add("show");
     }
 
@@ -436,23 +519,17 @@
         issue: form.issue.value.trim()
       };
 
-      // Attempt API first (if configured)
       const apiResult = await submitViaAPI({ type:"appointment_request", ...data });
 
       if(!apiResult.ok){
-        // Fallback to mailto (opens user's mail client prefilled)
         const subject = encodeURIComponent("New Appointment Request — " + data.name);
         const body = encodeMailtoBody(data);
         const mailtoURL = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
-        // open in a new window to preserve page
         window.location.href = mailtoURL;
       }
 
-      // Success notice (either path)
       showToast("Thanks! We received your request and will contact you ASAP.");
-      // Optional: reset form
       form.reset();
-      // Default preferred contact back to Text
       form.querySelector('input[name="contactPref"][value="Texting preferred"]').checked = true;
     });
   </script>
